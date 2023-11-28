@@ -21,41 +21,46 @@
         </div>
         @endif
     </div>
-    <section class="post">
-        <header>Create Post</header>
-        <form action="{{ route('post.create') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="content">
-                <!-- <img src="{{ URL::asset('icons/logo.png'); }}" alt="logo"> -->
-                <div class="details">
-                    <p> {{ $login_user->name }}</p>
-                </div>
-            </div>
-            <input type="text" name="title" class="form-control" placeholder="Title">
-            @if ($errors->has('title'))
-            <span class="text-danger">{{ $errors->first('title') }}</span>
-            @endif
-            <textarea placeholder="What's on your mind?" spellcheck="false" name="post" required class="m-2"></textarea>
-            @if ($errors->has('post'))
-            <span class="text-danger">{{ $errors->first('post') }}</span>
-            @endif
-            <div class="options">
-                <input type="file" name="photos[]" multiple>
-            </div>
-            @if ($errors->has('photos'))
-            <span class="text-danger">{{ $errors->first('photos') }}</span>
-            @endif
-            <button type="submit">Post</button>
-        </form>
-    </section>
-    <section style="background-color: #eee;">
-        <div class="container my-5 py-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-12 col-lg-10 col-xl-8">
+
+    <div class="row">
+        <div class="col-sm-5">
+            <section class="post">
+                <header>Create Post</header>
+                <form action="{{ route('post.create') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="content">
+                        <!-- <img src="{{ URL::asset('icons/logo.png'); }}" alt="logo"> -->
+                        <div class="details">
+                            <p> {{ $login_user->name }}</p>
+                        </div>
+                    </div>
+                    <input type="text" name="title" class="form-control" placeholder="Title">
+                    @if ($errors->has('title'))
+                    <span class="text-danger">{{ $errors->first('title') }}</span>
+                    @endif
+                    <textarea placeholder="What's on your mind?" spellcheck="false" name="post" required class="m-2"></textarea>
+                    @if ($errors->has('post'))
+                    <span class="text-danger">{{ $errors->first('post') }}</span>
+                    @endif
+                    <div class="options">
+                        <input type="file" name="photos[]" multiple>
+                    </div>
+                    @if ($errors->has('photos'))
+                    <span class="text-danger">{{ $errors->first('photos') }}</span>
+                    @endif
+                    <button type="submit">Post</button>
+                </form>
+            </section>
+        </div>
+        <div class="col-sm">
+            <section class="posts" style="height: 100vh;background-color: #eee;overflow-y: scroll;overflow-x: hidden;">
+
+                <div style="width:100%">
+
                     @foreach($posts as $post)
                     <div class="card mb-2">
                         <div class="card-body">
-                            <div class="d-flex flex-start ">
+                            <div class="d-flex flex-start">
                                 <img class="rounded-circle shadow-1-strong me-3" src="{{asset('icons/user.png')}}" alt="avatar" width="60" height="60" />
                                 <div>
                                     <h6 class="fw-bold text-primary mb-1">{{$post->user_detail->name}}</h6>
@@ -64,7 +69,7 @@
                                     </p>
                                 </div>
                                 @if($login_user->id === $post->user_id)
-                                <div style="margin-left: 300px;">
+                                <div style="margin-left: 40%;">
                                     <a href="{{route('post.edit',$post->id)}}">Edit</a>
                                     <a href="{{route('post.delete',$post->id)}}">Delete</a>
                                 </div>
@@ -82,16 +87,15 @@
                                     <i class="{{ $post->voted ?'fa':'far'}} fa-thumbs-up me-2"></i>
                                     <p class="mb-0">Like {{sizeof($post->votes)}}</p>
                                 </a>
-                                <a href="#" class="d-flex  me-3 align-items-center" style="text-decoration:none;">
+                                <a href="#" class="d-flex  me-3 align-items-center post-comments" style="text-decoration:none;">
                                     <i class="fa fa-comment me-2"></i>
                                     <p class="mb-0">Comments {{sizeof($post->comments)}}</p>
                                 </a>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-start">
+                        <div class="d-flex justify-content-start base-comments" style="display:none !important;">
                             <div class="card no-border">
                                 <div class="card-body p-4">
-
                                     <div class="row">
                                         <div class="col">
                                             @foreach($post->comments as $comment)
@@ -352,10 +356,11 @@
 
                     </div>
                     @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
 
+                </div>
+
+            </section>
+        </div>
+    </div>
 </div>
 @endsection

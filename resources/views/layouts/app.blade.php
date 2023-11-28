@@ -83,8 +83,12 @@
         $(document).ready(function() {
             $(".creply").click(function(e) {
                 e.preventDefault();
-                console.log("hello comment");
                 $(this).parents().next('.comment_form').toggle();
+            });
+            $(".post-comments").click(function(e) {
+                e.preventDefault();
+                console.log("hello comments")
+                $(this).parents().parents().next('.base-comments').toggle();
             });
             setInterval(() => {
                 $('.alert').hide();
