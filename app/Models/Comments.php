@@ -23,7 +23,7 @@ class Comments extends Model
     }
     public function replies()
     {
-        return $this->hasMany(Comments::class, 'comment_id', 'id')->with(['usr'])->orderBy('id','ASC');
+        return $this->hasMany(Comments::class, 'comment_id', 'id')->with(['usr', 'comment_uploads'])->orderBy('id', 'ASC');
     }
     // public function deleteReplies()
     // {

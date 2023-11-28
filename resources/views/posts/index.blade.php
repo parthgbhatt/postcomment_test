@@ -106,14 +106,19 @@
 
 
                                                         </div>
+
                                                         <p class="small mb-0" style="float:left;">
                                                             {{$comment->comment}}
                                                         </p>
+
                                                         @if($comment->user_id === $login_user->id)
                                                         <a href="{{route('comment.delete',$comment->id)}}" style="float:left;margin-left: 50px;"><span class="small"> Delete</span></a>
                                                         @endif
                                                         <a href="" class="creply" style="float:left;margin-left: 10px;"><span class="small"> Reply</span></a>
-
+                                                        <br>
+                                                        @foreach($comment->comment_uploads as $image)
+                                                        <img src="{{url('/images/comments/'.$image->file_path)}}" height="150" width="150" style="margin: 5px; border:2px solid black;">
+                                                        @endforeach
                                                     </div>
                                                     <div class="comment_form" style="list-style: none; display: none">
                                                         <div class="d-flex flex-start mt-4">
@@ -128,11 +133,21 @@
                                                                         </p>
                                                                     </div>
 
-                                                                    <form action="{{route('comment.reply.create',$comment->id)}}" method="post">
+                                                                    <form action="{{route('comment.reply.create',$comment->id)}}" method="post" enctype="multipart/form-data">
                                                                         @csrf
-                                                                        <input name="comment" class="form-control" type="text" style="width: 65%;float:left;" />
+                                                                        <input name="comment" class="form-control" type="text" style="width: 60%;float:left;" />
+                                                                        <div class="input--file" style="width: 10%;float:left;">
+                                                                            <span>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 24 24">
+                                                                                    <circle cx="12" cy="12" r="3.2" />
+                                                                                    <path d="M9 2l-1.83 2h-3.17c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2h-3.17l-1.83-2h-6zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+                                                                                    <path d="M0 0h24v24h-24z" fill="none" />
+                                                                                </svg>
+                                                                            </span>
+                                                                            <input type="file" name="commentfiles[]" multiple style="width: 30%;" />
+                                                                        </div>
                                                                         <input name="post_id" type="hidden" style="width: 65%;float:left;" value="{{$post->id}}" />
-                                                                        <button type="submit" class="btn btn-primary" style="width: 30%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
+                                                                        <button type="submit" class="btn btn-primary" style="width: 20%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
                                                                     </form>
 
                                                                 </div>
@@ -160,6 +175,10 @@
                                                                     <a href="{{route('comment.delete',$reply->id)}}"><span class="small">Delete</span></a>
                                                                     @endif
                                                                     <a href="" class="creply"><span class="small"> Reply</span></a>
+                                                                    <br>
+                                                                    @foreach($reply->comment_uploads as $image)
+                                                                    <img src="{{url('/images/comments/'.$image->file_path)}}" height="150" width="150" style="margin: 5px; border:2px solid black;">
+                                                                    @endforeach
                                                                 </div>
                                                                 <div class="comment_form" style="list-style: none; display: none">
                                                                     <div class="d-flex flex-start mt-4">
@@ -174,11 +193,21 @@
                                                                                     </p>
                                                                                 </div>
 
-                                                                                <form action="{{route('comment.reply.create',$reply->id)}}" method="post">
+                                                                                <form action="{{route('comment.reply.create',$reply->id)}}" method="post" enctype="multipart/form-data">
                                                                                     @csrf
-                                                                                    <input name="comment" class="form-control" type="text" style="width: 65%;float:left;" />
+                                                                                    <input name="comment" class="form-control" type="text" style="width: 60%;float:left;" />
+                                                                                    <div class="input--file" style="width: 10%;float:left;">
+                                                                                        <span>
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 24 24">
+                                                                                                <circle cx="12" cy="12" r="3.2" />
+                                                                                                <path d="M9 2l-1.83 2h-3.17c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2h-3.17l-1.83-2h-6zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+                                                                                                <path d="M0 0h24v24h-24z" fill="none" />
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                        <input type="file" name="commentfiles[]" multiple style="width: 30%;" />
+                                                                                    </div>
                                                                                     <input name="post_id" type="hidden" style="width: 65%;float:left;" value="{{$post->id}}" />
-                                                                                    <button type="submit" class="btn btn-primary" style="width: 30%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
+                                                                                    <button type="submit" class="btn btn-primary" style="width: 20%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
                                                                                 </form>
 
                                                                             </div>
@@ -206,6 +235,10 @@
                                                                                 <a href="{{route('comment.delete',$creply->id)}}" style="margin-left: 50px;"><span class="small">Delete</span></a>
                                                                                 @endif
                                                                                 <a href="" class="creply"><span class="small" style="margin-left: 10px;"> Reply</span></a>
+                                                                                <br>
+                                                                                @foreach($creply->comment_uploads as $image)
+                                                                                <img src="{{url('/images/comments/'.$image->file_path)}}" height="150" width="150" style="margin: 5px; border:2px solid black;">
+                                                                                @endforeach
                                                                             </div>
                                                                             <div class="comment_form" style="list-style: none; display: none">
                                                                                 <div class="d-flex flex-start mt-4">
@@ -214,17 +247,27 @@
                                                                                     </a>
                                                                                     <div class="flex-grow-1 flex-shrink-1 mb-3">
                                                                                         <div>
-                                                                                            <div class="d-flex justify-content-between ">
+                                                                                            <div class="d-flex justify-content-between">
                                                                                                 <p class="mb-1">
                                                                                                     {{$login_user->name}}
                                                                                                 </p>
                                                                                             </div>
 
-                                                                                            <form action="{{route('comment.reply.create',$creply->id)}}" method="post">
+                                                                                            <form action="{{route('comment.reply.create',$creply->id)}}" method="post" enctype="multipart/form-data">
                                                                                                 @csrf
-                                                                                                <input name="comment" class="form-control" type="text" style="width: 65%;float:left;" />
-                                                                                                <input name="post_id" type="hidden" style="width: 65%;float:left;" value="{{$post->id}}" />
-                                                                                                <button type="submit" class="btn btn-primary" style="width: 30%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
+                                                                                                <input name="comment" class="form-control" type="text" style="width: 60%;float:left;" />
+                                                                                                <div class="input--file" style="width: 10%;float:left;">
+                                                                                                    <span>
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 24 24">
+                                                                                                            <circle cx="12" cy="12" r="3.2" />
+                                                                                                            <path d="M9 2l-1.83 2h-3.17c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2h-3.17l-1.83-2h-6zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+                                                                                                            <path d="M0 0h24v24h-24z" fill="none" />
+                                                                                                        </svg>
+                                                                                                    </span>
+                                                                                                    <input type="file" name="commentfiles[]" multiple style="width: 30%;" />
+                                                                                                </div>
+                                                                                                <input name="post_id" type="hidden" value="{{$post->id}}" />
+                                                                                                <button type="submit" class="btn btn-primary" style="width: 20%;height:37px;float:right;background-color: transparent;color:blue"><i class="far fa-paper-plane"></i></button>
                                                                                             </form>
 
                                                                                         </div>
@@ -251,7 +294,12 @@
                                                                                             @if($thirdReply->user_id === $login_user->id)
                                                                                             <a href="{{route('comment.delete',$thirdReply->id)}}" style="margin-left: 50px;"><span class="small">Delete</span></a>
                                                                                             @endif
+
                                                                                         </div>
+                                                                                        <br>
+                                                                                        @foreach($thirdReply->comment_uploads as $image)
+                                                                                        <img src="{{url('/images/comments/'.$image->file_path)}}" height="150" width="150" style="margin: 5px; border:2px solid black;">
+                                                                                        @endforeach
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -275,7 +323,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{route('comment.create',$post->id)}}" class="pb-3" method="post"  enctype="multipart/form-data">
+                        <form action="{{route('comment.create',$post->id)}}" class="pb-3" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                                 <div class="d-flex flex-start w-100">
@@ -291,7 +339,7 @@
                                                 <path d="M0 0h24v24h-24z" fill="none" />
                                             </svg>
                                         </span>
-                                        <input name="Select File" type="file" name="commentfiles[]" multiple />
+                                        <input type="file" name="commentfiles[]" multiple />
                                     </div>
 
                                 </div>

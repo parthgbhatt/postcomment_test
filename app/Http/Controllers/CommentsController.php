@@ -6,6 +6,7 @@ use App\Models\Comments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CommentUploads;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CommentsController extends Controller
 {
@@ -33,7 +34,7 @@ class CommentsController extends Controller
                 $image_name = md5(rand(1000, 10000));
                 $ext = strtolower($file->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $file->move(public_path('commentscomments'), $image_full_name);
+                $file->move(public_path('images/comments'), $image_full_name);
                 $images[] = $image_full_name;
             }
         }
@@ -61,6 +62,25 @@ class CommentsController extends Controller
         $comment->comment = $request->comment;
         $comment->comment_id = $comment_id;
         $comment->save();
+
+        $images = array();
+        if ($request->hasFile('commentfiles')) {
+            $files = $request->file('commentfiles');
+            foreach ($files as $file) {
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+                $file->move(public_path('images/comments'), $image_full_name);
+                $images[] = $image_full_name;
+            }
+        }
+        foreach ($images as $img) {
+            $post_img = new CommentUploads();
+            $post_img->file_path = $img;
+            $post_img->comment_id = $comment->id;
+            $post_img->user_id = $login_user->id;
+            $post_img->save();
+        }
         return back()->with('success', 'Comment successfull');
     }
     public function deleteComment($commentId)

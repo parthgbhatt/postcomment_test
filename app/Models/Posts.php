@@ -22,7 +22,7 @@ class Posts extends Model
     }
     public function comments()
     {
-        return $this->hasMany(Comments::class, 'post_id', 'id')->with(['usr', 'replies'])->whereNull('comment_id');
+        return $this->hasMany(Comments::class, 'post_id', 'id')->with(['usr', 'replies', 'comment_uploads'])->whereNull('comment_id');
         // return $this->belongsToMany(Comments::class, 'id', 'post_id')->with('comment_uploads');
     }
     public function uploads()
