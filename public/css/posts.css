@@ -164,7 +164,7 @@ form :where(textarea, button) {
 form textarea {
     resize: none;
     font-size: 18px;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     min-height: 100px;
 }
 
@@ -371,3 +371,40 @@ form textarea:valid~button:hover {
 .list li.active .radio::before {
     background: #4599FF;
 }
+
+.name {
+    margin: 0 !important;
+}
+
+.comment-text {
+    font-size: 12px;
+}
+
+.no-border {
+    border: none !important;
+}
+
+input {
+    background-color: #ffffff;
+}
+
+.form-control {
+    background-color: #fff !important;
+}
+
+.input--file {
+    position: relative;
+    color: #7f7f7f;
+}
+
+.input--file input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+/* ::placeholder
+{
+    padding: 10px;
+} */

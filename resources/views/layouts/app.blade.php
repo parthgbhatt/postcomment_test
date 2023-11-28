@@ -78,7 +78,19 @@
             @yield('content')
         </main>
     </div>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".creply").click(function(e) {
+                e.preventDefault();
+                console.log("hello comment");
+                $(this).parents().next('.comment_form').toggle();
+            });
+            setInterval(() => {
+                $('.alert').hide();
+            }, 2000);
+        });
+    </script>
 </body>
 
 </html>
